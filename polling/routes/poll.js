@@ -46,7 +46,7 @@ router.post('/',(req, res)=>{
         publisher.publish('voteBank',vote_saved);
         console.log('New vote added');
         // eventEmitter.emit('voteSaved',{vote:vote_saved});
-        res.json({msg:vote_saved});
+        res.json({msg:vote_saved,vote:req.body.os});
     })
     
 })
