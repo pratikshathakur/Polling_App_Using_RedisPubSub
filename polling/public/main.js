@@ -41,7 +41,7 @@ var eventSource =new EventSource("/poll/eventSource");
     data: {
     labels: ['Windows', 'MacOs', 'Linux', 'Others',],
     datasets: [{
-        label: `Total no of Votes:${totalVotes}`,
+        label: '',
         data: [voteCounts.Windows,voteCounts.MacOS,voteCounts.Linux,voteCounts.Other],
         backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
@@ -80,7 +80,7 @@ eventSource.addEventListener("message",(e)=>{
     console.log(jsondata.os);
     console.log( myChart.data)
     if(jsondata.os==='Windows'){
-        myChart.data.datasets[0].data[0]+=1;   
+        myChart.data.datasets[0].data[0]+=1; 
         myChart.update();  
     }if(jsondata.os==='MacOs'){
         myChart.data.datasets[0].data[1]+=1;
