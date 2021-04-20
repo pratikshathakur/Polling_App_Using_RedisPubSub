@@ -2,9 +2,6 @@ const express = require('express');
 const router=express.Router();
 const mongoose = require('mongoose');
 const Vote = require('../models/vote')
-const events=require('events');
-const EventEmitter = require('events');
-var eventEmitter = new events.EventEmitter();
 const redis=require('redis');
 const subscriber = redis.createClient();
 const publisher = redis.createClient();
@@ -41,11 +38,8 @@ router.post('/',(req, res)=>{
         points:1
     })
     vote_obj.save().then((vote)=>{
-        
         const vote_saved=JSON.stringify(vote);
         publisher.publish('voteBank',vote_saved);
-        console.log('New vote added');
-        // eventEmitter.emit('voteSaved',{vote:vote_saved});
         res.json({msg:vote_saved,vote:req.body.os});
     })
     

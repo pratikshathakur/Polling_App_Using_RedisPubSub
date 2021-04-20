@@ -2,6 +2,8 @@ windows=document.getElementById('windows');
 macos=document.getElementById('macos');
 linux=document.getElementById('linux');
 other=document.getElementById('other');
+var eventSource =new EventSource("/poll/eventSource");
+
 
 const form = document.getElementById('vote-form');
 form.addEventListener('submit',(e)=>{
@@ -20,10 +22,7 @@ form.addEventListener('submit',(e)=>{
         
 });
 
-var eventSource =new EventSource("/poll/eventSource");
-        
 
-   
     fetch('http://localhost:8080/poll')
     .then(res => res.json())
     .then((data)=>{
@@ -77,8 +76,6 @@ options: {
 
 eventSource.addEventListener("message",(e)=>{
     const jsondata=JSON.parse(e.data);
-    console.log(jsondata.os);
-    console.log( myChart.data)
     if(jsondata.os==='Windows'){
         myChart.data.datasets[0].data[0]+=1; 
         myChart.update();  
@@ -92,7 +89,5 @@ eventSource.addEventListener("message",(e)=>{
         myChart.data.datasets[0].data[3]+=1;
         myChart.update();
     }
-  
-// chart.data.datasets[0].data[2] = 50
 });
 })
